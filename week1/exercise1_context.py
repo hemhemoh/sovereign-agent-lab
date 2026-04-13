@@ -54,10 +54,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(
-    base_url="https://api.tokenfactory.nebius.com/v1/",
-    api_key=os.getenv("NEBIUS_KEY"),
-)
+client = OpenAI(base_url="https://api.tokenfactory.nebius.com/v1/", api_key=os.getenv("NEBIUS_KEY"))
 
 OUTPUTS_DIR = Path(__file__).parent / "outputs"
 OUTPUTS_DIR.mkdir(exist_ok=True)
