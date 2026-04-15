@@ -46,22 +46,24 @@ PART_B_CHANGED_RESULTS = False
 # Which distractor was more likely to cause a wrong answer, and why?
 # Minimum 20 words.
 PART_B_HARDEST_DISTRACTOR = """
-FILL ME IN
+The Hollyrood Arms was the distractor that was more likely to cause a wrong answer because it is the only other venue on the list of options that meets all the other conditions except that the venue was full).
 """
 
 # ── Part C ─────────────────────────────────────────────────────────────────
 
 # Did the exercise run Part C (small model)?
 # Check outputs/ex1_results.json → "part_c_was_run"
-PART_C_WAS_RUN = None   # True or False
+PART_C_WAS_RUN = True   # True or False
 
-PART_C_PLAIN_ANSWER    = "FILL_ME_IN_OR_N/A"
-PART_C_XML_ANSWER      = "FILL_ME_IN_OR_N/A"
-PART_C_SANDWICH_ANSWER = "FILL_ME_IN_OR_N/A"
+PART_C_PLAIN_ANSWER    = "The Haymarket Vaults"
+PART_C_XML_ANSWER      = "The Haymarket Vaults"
+PART_C_SANDWICH_ANSWER = "The Haymarket Vaults"
 
 # Explain what Part C showed, or why it wasn't needed. Minimum 30 words.
 PART_C_EXPLANATION = """
-FILL ME IN
+Part C showed that even with the smaller model, the agent understood the context and was able to give correct answers.
+The major difference between the smaller model and the larger was the smaller had consistent answers across all formatting options.
+Unlike the larger model where the answer was different for the plain formatting option and the other two formatting options.
 """
 
 # ── Core lesson ────────────────────────────────────────────────────────────
@@ -70,5 +72,7 @@ FILL ME IN
 # "Context formatting matters most when..."
 
 CORE_LESSON = """
-FILL ME IN
+Context formatting matters most when the model is large and the data is noisy.
+Based on the results from this exercise, I believe it is important to not just pass your answers in as ...
+plain text and also to use smaller models as they are just as good in retrieving information. I noticed that the part c generally consumed lesser tokens than part and and b which is more cost effective in the long run.
 """
