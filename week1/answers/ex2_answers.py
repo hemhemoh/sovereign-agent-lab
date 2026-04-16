@@ -103,7 +103,10 @@ Since there's no tool for train times, I can't use any of the provided functions
 
 # Would this behaviour be acceptable in a real booking assistant? Min 30 words.
 SCENARIO_3_ACCEPTABLE = """
-No, this behaviour will not be accepted in a real booking assistant. The assistant should recognize that the user's query is out of scope and respond with a polite message indicating that it cannot assist with train times after realizing that none of the available tools are relevant to the request.
+For a research agent, this transparency about limitations is acceptable - it doesn't hallucinate and explains why it can't help.
+However, for a production booking assistant, this "thinking out loud" behavior would be unacceptable.
+Customers expect immediate, professional deflection like "I can only assist with venue bookings. 
+For train information, please contact Scotrail" rather than watching the agent reason through its tool inventory.
 """
 
 # ── Task D ─────────────────────────────────────────────────────────────────
@@ -131,7 +134,9 @@ graph TD;
 
 # Compare the LangGraph graph to exercise3_rasa/data/flows.yml. Min 30 words.
 TASK_D_COMPARISON = """
-FILL ME IN
+The LangGraph agent uses a simple loop where the LLM decides what to do at every step, making it highly flexible but unpredictable. 
+In contrast, Rasa CALM defines explicit flows with predetermined steps - the LLM only chooses which flow to start, 
+then Rasa executes the steps deterministically. This represents a trade-off between flexibility (LangGraph) and predictability/auditability (Rasa).
 """
 
 # ── Reflection ─────────────────────────────────────────────────────────────
@@ -140,5 +145,6 @@ FILL ME IN
 # Must reference a specific behaviour from your run.
 
 MOST_SURPRISING = """
-FILL ME IN
+The flyer tool(Task B) :The prompt was for "The Haymarket Vaults" but in Task A the agent confirmed "The Albanach". 
+This is odd - why did the agent generate a flyer for a different venue than the one it confirmed?
 """

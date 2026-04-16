@@ -7,11 +7,17 @@ Fill this in after running exercise4_mcp_client.py.
 # ── Basic results ──────────────────────────────────────────────────────────
 
 # Tool names as shown in "Discovered N tools" output.
-TOOLS_DISCOVERED = []
+TOOLS_DISCOVERED = ["search_venues", "get_venue_details"]
 
-QUERY_1_VENUE_NAME    = "FILL_ME_IN"
-QUERY_1_VENUE_ADDRESS = "FILL_ME_IN"
-QUERY_2_FINAL_ANSWER  = "FILL_ME_IN"
+QUERY_1_VENUE_NAME    = "The Haymarket Vaults"
+QUERY_1_VENUE_ADDRESS = "1 Dalry Road, Edinburgh"
+QUERY_2_FINAL_ANSWER  = """
+It seems there are no Edinburgh venues currently available that can accommodate 300 people with vegan options. 
+Would you like me to:\n
+\n1. Search for venues with a lower capacity (e.g., 250-299)?
+\n2. Look for venues with vegan options but no strict minimum capacity?
+\n3. Check for non-vegan venues that could accommodate 300 people?\n\nLet me know how you'd like to proceed!
+"""
 
 # ── The experiment ─────────────────────────────────────────────────────────
 # Required: modify venue_server.py, rerun, revert.
