@@ -95,6 +95,26 @@ def get_venue_details(pub_name: str) -> str:
     return json.dumps({"success": True, "name": pub_name, **venue})
 
 
+@mcp.tool()
+def check_venue_capacity(pub_name: str) -> str:
+    """
+    Quick capacity check for a specific venue without fetching full details.
+    Returns just the maximum guest capacity for the named venue.
+    pub_name must match exactly a known venue name.
+    """
+    venue = VENUES.get(pub_name)
+    if not venue:
+        return json.dumps({
+            "success": False,
+            "error": f"Venue not found: '{pub_name}'",
+        })
+    return json.dumps({
+        "success": True,
+        "name": pub_name,
+        "capacity": venue["capacity"],
+    })
+
+
 if __name__ == "__main__":
     print(f"Edinburgh Venue MCP Server | {len(VENUES)} venues | stdio transport")
     mcp.run()

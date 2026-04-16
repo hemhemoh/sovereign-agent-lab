@@ -22,21 +22,27 @@ Would you like me to:\n
 # ── The experiment ─────────────────────────────────────────────────────────
 # Required: modify venue_server.py, rerun, revert.
 
-EX4_EXPERIMENT_DONE = None   # True or False
+EX4_EXPERIMENT_DONE = True  # True or False
 
 # What changed, and which files did or didn't need updating? Min 30 words.
 EX4_EXPERIMENT_RESULT = """
-FILL ME IN
+I added a new tool check_venue_capacity to mcp_venue_server.py that returns just the capacity for a venue. 
+When I reran exercise4_mcp_client.py without modifying it at all, the client automatically discovered 3 tools instead of 2. 
+The client code (exercise4_mcp_client.py) required zero changes - it dynamically discovered the new tool through MCP's tool listing protocol. 
+This demonstrates MCP's key value: server-side tool changes are instantly available to all clients without client code updates.
 """
 
 # ── MCP vs hardcoded ───────────────────────────────────────────────────────
 
-LINES_OF_TOOL_CODE_EX2 = 0   # count in exercise2_langgraph.py
+LINES_OF_TOOL_CODE_EX2 = 4   # count in exercise2_langgraph.py 
 LINES_OF_TOOL_CODE_EX4 = 0   # count in exercise4_mcp_client.py
 
 # What does MCP buy you beyond "the tools are in a separate file"? Min 30 words.
 MCP_VALUE_PROPOSITION = """
-FILL ME IN
+MCP provides dynamic tool discovery - the client automatically learns what tools exist and their schemas without hardcoded imports. 
+This enables version independence (server updates don't require client changes), cross-language interoperability (Python server, TypeScript client), process isolation for security, and tool reusability across multiple agents. 
+Multiple clients (LangGraph research agent, Rasa actions, future agents) can all connect to the same tool server without duplicating tool logic. 
+It's a standardized protocol, not just file separation.
 """
 
 # ── PyNanoClaw architecture — SPECULATION QUESTION ─────────────────────────
@@ -76,15 +82,15 @@ FILL ME IN
 #     ambiguous task.
 
 WEEK_5_ARCHITECTURE = """
-Planner - A strong reasoning model (upstream of the loop) that breaks Rod's WhatsApp into subgoals. Lives in the autonomous loop half.
+- Planner - A strong reasoning model (upstream of the loop) that breaks Rod's WhatsApp into subgoals. Lives in the autonomous loop half.
 
-Executor - Your current research_agent.py! It's the ReAct loop that calls tools and reasons through each step. Lives in the autonomous loop half.
+- Executor - Your current research_agent.py! It's the ReAct loop that calls tools and reasons through each step. Lives in the autonomous loop half.
 
-Shared MCP Tool Server - The mcp_venue_server.py already built, but expanded with web search, calendar, email. Sits between both halves, both agents connect to it.
+- Shared MCP Tool Server - The mcp_venue_server.py already built, but expanded with web search, calendar, email. Sits between both halves, both agents connect to it.
 
-Structured Agent - Rasa CALM agent from Exercise 3. Handles the pub manager phone call with explicit flows and business rules. Lives in the structured agent half.
+- Structured Agent - Rasa CALM agent from Exercise 3. Handles the pub manager phone call with explicit flows and business rules. Lives in the structured agent half.
 
-Handoff Bridge - The component that lets the loop say "I need to make a phone call, pass this to Rasa" and lets Rasa say "I need research, pass this back to the loop". Lives between both halves
+- Handoff Bridge - The component that lets the loop say "I need to make a phone call, pass this to Rasa" and lets Rasa say "I need research, pass this back to the loop". Lives between both halves
 """
 
 # ── The guiding question ───────────────────────────────────────────────────
