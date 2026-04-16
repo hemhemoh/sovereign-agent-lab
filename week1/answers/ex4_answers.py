@@ -76,11 +76,15 @@ FILL ME IN
 #     ambiguous task.
 
 WEEK_5_ARCHITECTURE = """
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
+Planner - A strong reasoning model (upstream of the loop) that breaks Rod's WhatsApp into subgoals. Lives in the autonomous loop half.
+
+Executor - Your current research_agent.py! It's the ReAct loop that calls tools and reasons through each step. Lives in the autonomous loop half.
+
+Shared MCP Tool Server - The mcp_venue_server.py already built, but expanded with web search, calendar, email. Sits between both halves, both agents connect to it.
+
+Structured Agent - Rasa CALM agent from Exercise 3. Handles the pub manager phone call with explicit flows and business rules. Lives in the structured agent half.
+
+Handoff Bridge - The component that lets the loop say "I need to make a phone call, pass this to Rasa" and lets Rasa say "I need research, pass this back to the loop". Lives between both halves
 """
 
 # ── The guiding question ───────────────────────────────────────────────────
@@ -88,5 +92,9 @@ WEEK_5_ARCHITECTURE = """
 # Must reference specific things you observed in your runs. Min 60 words.
 
 GUIDING_QUESTION_ANSWER = """
-FILL ME IN
+LangGraph for research, Rasa CALM for the confirmation call. 
+In Exercise 2 Scenario 1, when The Bow Bar was too small (80 capacity), the LangGraph agent pivoted to The Albanach without being told how - this adaptability is essential for open-ended research. 
+In Exercise 3, Rasa CALM consistently enforced the £300 deposit limit across all conversations, escalating when I said £800. 
+Swapping them would fail: Rasa cannot improvise when the first venue is unavailable (flows.yml doesn't script every possibility), 
+and LangGraph might inconsistently enforce business rules - accepting £800 in one conversation and rejecting it in another. 
 """

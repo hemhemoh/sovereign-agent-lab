@@ -53,7 +53,7 @@ Thank you — booking confirmed. 160 guests, 50 requiring vegan meals, £200 dep
 Is there anything else I can help you with?
 """
 
-CONVERSATION_1_OUTCOME = "Confirmed"   # "confirmed" or "escalated"
+CONVERSATION_1_OUTCOME = "confirmed"   # "confirmed" or "escalated"
 
 # ── Conversation 2: Deposit too high ───────────────────────────────────────
 
@@ -69,7 +69,7 @@ I need to check one thing with the organiser before I can confirm. The issue is:
 Is there anything else I can help you with?
 """
 
-CONVERSATION_2_OUTCOME = "Escalated"   # "confirmed" or "escalated"
+CONVERSATION_2_OUTCOME = "escalated"   # "confirmed" or "escalated"
 CONVERSATION_2_REASON  = "Deposit amount exceeds the maximum authorised limit of £300."   # the reason the agent gave for escalating
 
 # ── Conversation 3: Out of scope ───────────────────────────────────────────
@@ -128,21 +128,16 @@ It also asked to call back within 15 minutes, which is the expected behavior for
 # Min 30 words.
 
 CALM_VS_OLD_RASA = """
-FILL ME IN
+CALM is simpler to set up and maintain, but it trades determinism for flexibility.
+The LLM now handles natural language extraction (understanding "about 50 need vegan" → 50) and intent recognition, 
+which the old approach required regex patterns and training examples for. This makes conversations more natural and flexible. 
+However, LLM extraction is not always reliable - during Task B testing, when I said "about 50 need vegan", 
+CALM failed to extract the value and asked me to rephrase, showing that LLM-based extraction can be unpredictable.
 
-Think about:
-- What does the LLM handle now that Python handled before?
-- What does Python STILL handle, and why (hint: business rules)?
-- Is there anything you trusted more in the old approach?
-
-Calm is simpler to set up and maintain, but it relies heavily on the LLM's ability to understand and extract information from natural language.
-For example, when I was running taskB with the same conversation script from earlier, at the point it asked how many people need vegan, I said "about 50 need vegan"
-and it had to think out loud and then says "I’m sorry I am unable to understand you, could you please rephrase? And how many of those guests will need vegan meals?
-So, having LLM based extraction only is not reliable as it can sometimes fail like it did here. Having a fallback mechanism or a way to handle such cases would be beneficial.
-
-The LLM handles the ability to understand and extract information from natural language, which can make the conversation more flexible and natural for users.
-Python still handles the business rules, such as checking if the deposit amount exceeds the authorized limit or if the number of guests exceeds the venue's capacity. 
-This is important because business rules need to be deterministic and reliable, and relying on the LLM for this could lead to inconsistent behavior.
+Python still handles the business rules (deposit limits, capacity checks) and must continue to do so. 
+Business constraints need to be deterministic and auditable - you cannot rely on an LLM to consistently enforce a £300 deposit limit. 
+The gain is less regex complexity and more natural conversations. 
+The cost is occasional extraction failures that wouldn't happen with explicit regex patterns.
 """
 
 # ── The setup cost ─────────────────────────────────────────────────────────
@@ -156,11 +151,12 @@ This is important because business rules need to be deterministic and reliable, 
 # Min 40 words.
 
 SETUP_COST_VALUE = """
-FILL ME IN
-Be specific. What can the Rasa CALM agent NOT do that LangGraph could?
-Is that a feature or a limitation for the confirmation use case?
-Think about: can the CALM agent improvise a response it wasn't trained on?
-Can it call a tool that wasn't defined in flows.yml?
 
+The setup cost bought us predictability and control. 
+Rasa CALM cannot improvise responses or call tools not defined in flows.yml - it can only execute the predefined flows. 
+LangGraph can improvise at every step, calling any available tool and making novel decisions. 
+For the confirmation use case, CALM's limitation is actually a feature: you want the agent to follow exact steps, enforce business rules consistently, and never deviate from the script. 
+This predictability is essential for compliance, auditability, and reliability. 
+You sacrifice flexibility to gain confidence that the agent will never hallucinate a £400 deposit limit or skip validation steps.
 
 """
